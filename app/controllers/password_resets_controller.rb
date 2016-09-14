@@ -50,6 +50,8 @@ class PasswordResetsController < ApplicationController
         redirect_to root_url
       end
     end
+
+    #kiểm tra thời gian tối đa reset pass
     def check_expiration
       if @user.password_reset_expired?
         flash[:danger] = "Password reset has expired."

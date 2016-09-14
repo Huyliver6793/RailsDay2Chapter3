@@ -46,8 +46,8 @@ def User.digest(string)
 
   # kích hoạt tài khoản
   def activate
-    update_attribute(:activate, true)
-    update_attribute(:activate_at, Time.zone.now)
+    update_attribute(:activated, true)
+    update_attribute(:activated_at, Time.zone.now)
   end
 
   # gửi email kích hoạt
