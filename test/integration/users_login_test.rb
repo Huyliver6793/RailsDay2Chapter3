@@ -24,8 +24,7 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
                                             password:              "password",
                                             password_confirmation: "password" }
     end
-    assert_template 'users/show'
-    assert is_logged_in?
+   
   end
   test "login with remembering" do
     log_in_as(@user, remember_me: '1')
