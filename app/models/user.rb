@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+
   attr_accessor :remember_token, :activation_token, :reset_token
   before_create :create_activation_digest
 	before_save :downcase_email
@@ -37,6 +38,7 @@ def User.digest(string)
     end
   end
 
+  
   # trả về true nếu token này phù hợp
   def authenticated?(attribute, token)
     digest = send("#{attribute}_digest")
@@ -77,7 +79,7 @@ def User.digest(string)
   def password_reset_expired?
     reset_sent_at < 2.hours.ago
   end
- private
+ public
   def create_activation_digest
      self.activation_token  = User.new_token
      self.activation_digest = User.digest(activation_token)

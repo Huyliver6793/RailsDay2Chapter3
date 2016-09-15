@@ -1,6 +1,6 @@
 class PasswordResetsController < ApplicationController
 	before_action :get_user,   only: [:edit, :update]
-  	before_action :valid_user, only: [:edit, :update]
+  before_action :valid_user, only: [:edit, :update]
 	before_action :check_expiration, only: [:edit, :update]
 
   def new
@@ -24,7 +24,7 @@ class PasswordResetsController < ApplicationController
   end
 
   def create
-  	@user = User.find(email: params[:password_reset][:email].downcase)
+  	@user = User.find_by(email: params[:password_reset][:email].downcase)
   	if @user
   		@user.create_reset_digest
   		@user.send_password_reset_email
@@ -53,7 +53,7 @@ class PasswordResetsController < ApplicationController
 
     #kiểm tra thời gian tối đa reset pass
     def check_expiration
-      if @user.password_reset_expired?
+      if @user && @user.password_reset_expired?
         flash[:danger] = "Password reset has expired."
         redirect_to new_password_reset_url
       end

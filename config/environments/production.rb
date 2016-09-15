@@ -75,5 +75,23 @@ Rails.application.configure do
   config.log_formatter = ::Logger::Formatter.new
 
   # Do not dump schema after migrations.
-  config.active_record.dump_schema_after_migration = false
+  config.action_mailer.perform_deliveries = false
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.default :charset => "utf-8"
+  config.action_mailer.delivery_method = :test
+  config.force_ssl = true
+  host = 'localhost:3000'
+  config.action_mailer.default_url_options = { host: host }
+  config.time_zone = "Hanoi"
+  config.action_mailer.delivery_method = :smtp
+  ActionMailer::Base.smtp_settings = {
+    :address        => 'smtp.gmail.com',
+    :port           =>  587,
+    :authentication => :plain,
+    :user_name      => 'huynd6793@gmail.com',
+    :password       => 'huyman123',
+    :domain         => 'gmail.com',
+    :enable_starttls_auto => true
+  }
+  
 end
