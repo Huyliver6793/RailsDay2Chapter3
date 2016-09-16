@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :logged_user, only: [:index, :edit, :update]
+  before_action :logged_user, only: [:index, :edit, :update, :destroy]
   before_action :correct_user, only: [:edit, :update]
   before_action :admin_user, only: :destroy
   
@@ -21,13 +21,7 @@ class UsersController < ApplicationController
   end
 
   # kiếm tra người dùng đăng nhập hay chưa
-  def logged_user
-    unless logged_in?
-      store_location
-      flash[:danger] = "Bạn phải đăng nhập"
-      redirect_to login_url
-    end
-  end
+ 
 
   # kiểm tra có đúng người dùng hay không
   def correct_user
@@ -56,6 +50,7 @@ class UsersController < ApplicationController
 
   def show
   	@user = User.find(params[:id])
+    @microposts = @user.microposts.paginate(page: params[:page])
   end
 
   def create

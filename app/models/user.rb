@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-
+  has_many :microposts, dependent: :destroy
   attr_accessor :remember_token, :activation_token, :reset_token
   before_create :create_activation_digest
 	before_save :downcase_email
@@ -16,6 +16,11 @@ def User.digest(string)
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
                                                   BCrypt::Engine.cost
     BCrypt::Password.create(string, cost: cost)
+  end
+
+  # sử dụng tìm kiếm id trong sql, câu lệnh này để tránh lỗi SQL injection
+  def feed
+    Micropost.where("user_id = ?", id)
   end
 
   #tạo chuỗi ngẫu nhiên cho cookies 

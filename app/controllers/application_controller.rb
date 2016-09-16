@@ -4,4 +4,13 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :reset_session
   skip_before_action :verify_authenticity_token
   include SessionsHelper
+
+private
+  def logged_user
+      unless logged_in?
+        store_location
+        flash[:danger] = "Mời bạn đăng nhập!"
+        redirect_to login_url
+      end
+    end
 end

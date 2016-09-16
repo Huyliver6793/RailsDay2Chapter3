@@ -11,7 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160914083556) do
+ActiveRecord::Schema.define(version: 20160916034249) do
+
+  create_table "microposts", force: :cascade do |t|
+    t.text     "content",    limit: 65535
+    t.integer  "user_id",    limit: 4
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.string   "picture",    limit: 255
+  end
+
+  add_index "microposts", ["user_id", "created_at"], name: "index_microposts_on_user_id_and_created_at", using: :btree
+  add_index "microposts", ["user_id"], name: "index_microposts_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "name",              limit: 255
@@ -30,4 +41,5 @@ ActiveRecord::Schema.define(version: 20160914083556) do
 
   add_index "users", ["email"], name: "index_users_on_email", using: :btree
 
+  add_foreign_key "microposts", "users"
 end

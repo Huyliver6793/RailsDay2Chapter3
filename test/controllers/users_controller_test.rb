@@ -15,12 +15,6 @@ def setup
     assert_redirected_to login_url
   end
 
-  test "should redirect update when not logged in" do
-    patch :update, id: @user, user: { name: @user.name, email: @user.email }
-    assert_not flash.empty?
-    assert_redirected_to login_url
-  end
-
   test "should redirect edit when logged in as wrong user" do
     log_in_as(@other_user)
     get :edit, id: @user
